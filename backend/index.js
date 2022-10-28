@@ -5,6 +5,7 @@ const mongoose = require('mongoose')//connecting to db
 //const dotenv = require('dotenv')
 const signUpTemplateCopy = require('./models/SignUpModels')
 const componenttemplateCopy= require('./models/componentmodel')
+const ordertemplateCopy= require('./models/ordermodel')
 //const routeUrls = require('./routes/routes.js')
 const cors = require('cors')
 app.use(express.json())// activation
@@ -124,10 +125,7 @@ app.post('/query',(request,response)=>{
             if(operation==='search')
             {
                 console.log("inside search")
-                const comp = '{ "employees" : [' +
-                '{ "firstName":"John" , "lastName":"Doe" },' +
-                '{ "firstName":"Anna" , "lastName":"Smith" },' +
-                '{ "firstName":"Peter" , "lastName":"Jones" } ]}'
+               
                 response.setHeader('Content-Type', 'application/json');
                 response.end(JSON.stringify({componentname:component.componentname,
                         category:component.category,
@@ -137,7 +135,7 @@ app.post('/query',(request,response)=>{
                         power:component.power,
                         length:component.length
                     }))
-
+                //you can transfer data only in json 
                 //response.send({message:"component found successfully "+component.componentname+ "having"+'<br/>diameter :'+component.diameter+'<br/>quantity :'+component.quantity+'<br/>thickness :'+component.thickness+'<br/>power :'+component.power+'<br/>lenth :'+component.length})
             }
             
@@ -155,6 +153,72 @@ app.post('/query',(request,response)=>{
         else
         {
             response.send("Component not found")
+        }
+    
+    })
+}
+}) 
+
+app.post('/orderquery',(request,response)=>{
+    response.header("Access-Control-Allow-Origin", "*");
+    const{ operation,orderNo,orderDate,arrivalTime,cost,username}=request.body
+    console.log("In order query route")
+    if(operation=='add')
+            {
+                console.log("inside add")
+                const orderadd = new ordertemplateCopy({
+                    orderNo,
+                    orderDate,
+                    arrivalTime,
+                    cost,
+                    username,
+                })
+                console.log(orderadd)
+                orderadd.save(err=>{
+                    if(err){
+                        response.send(err)
+    
+                    }
+                    else{
+                        response.send({message:"successfully added"})
+                    }
+                })
+            }
+        else
+        {
+        ordertemplateCopy.findOne({orderNo},(err,order)=>{
+        if(order)
+        {
+            console.log("order found")
+            if(operation==='search')
+            {
+                console.log("inside search")
+               
+                response.setHeader('Content-Type', 'application/json');
+                response.end(JSON.stringify({orderNo:order.orderNo,
+                    orderDate:order.orderDate,
+                    arrivalTime:order.arrivalTime,
+                    cost:order.cost,
+                    username:order.username,
+                    }))
+                //you can transfer data only in json 
+                //response.send({message:"component found successfully "+component.componentname+ "having"+'<br/>diameter :'+component.diameter+'<br/>quantity :'+component.quantity+'<br/>thickness :'+component.thickness+'<br/>power :'+component.power+'<br/>lenth :'+component.length})
+            }
+            
+            else if(operation==='delete')
+            {
+                console.log("inside delete")
+                ordertemplateCopy.deleteOne({orderNo})
+                
+           
+            }
+            else{
+                response.send({message:"No such operation found"})
+            }
+        }
+        else
+        {
+            response.send("Order not found")
         }
     
     })

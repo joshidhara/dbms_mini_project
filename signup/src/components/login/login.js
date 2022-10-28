@@ -27,7 +27,12 @@ const Login = ({ setLoginUser}) => {
         .then(res => {
             alert(res.data.message)
             setLoginUser(res.data.user)
-            navigate("/")
+            if(user.role==="User"){
+                navigate("/")
+            }
+            else{
+                navigate("/adminhome")
+            }
         })
     }
 
