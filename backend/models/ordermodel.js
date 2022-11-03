@@ -6,11 +6,11 @@ const ordertemplate = new mongoose.Schema({
         required: true
     },
     orderDate:{
-        type: String,
+        type: Date,
         
     },
     arrivalTime:{
-        type: String,
+        type: Date,
         
     },
     cost:{

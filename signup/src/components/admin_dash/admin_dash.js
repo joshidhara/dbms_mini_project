@@ -3,7 +3,7 @@ import "./admin_dash.css"
 import axios from "axios"
 import { useLocation } from "react-router-dom"
 
-const AdminDashboard = () => {
+const AdminDashboard = ({setLoginUser}) => {
     const location=useLocation()
     console.log(location.state)
 

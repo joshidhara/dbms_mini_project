@@ -5,6 +5,7 @@ import Login from "./components/login/login.js"
 import Register from "./components/register/register.js"
 import Dashboard from "./components/dashboard/dashboard.js"
 import AdminDashboard from "./components/admin_dash/admin_dash.js"
+import CheckThreshold from "./components/checkthreshold/checkthreshold.js"
 import { BrowserRouter as Router, Routes, Route,Navigate } from "react-router-dom";
 import { useState } from 'react'
 
@@ -29,10 +30,16 @@ function App() {
           />
           <Route path="/login" element={<Login setLoginUser={setLoginUser}/>}/>
             
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
+          <Route path="/dashboard"  element={
+              user && user._id ? (<Dashboard setLoginUser={setLoginUser} />): (<Navigate replace to={"/login"} />)
+            }/>
+          <Route path="/AdminDashboard" element={
+              user && user._id ? (<AdminDashboard setLoginUser={setLoginUser} />): (<Navigate replace to={"/login"} />)
+            }/>
           <Route path="/register" element={<Register />}/>
-            
+          <Route path="/checkthreshold" element={
+              user && user._id ? (<CheckThreshold setLoginUser={setLoginUser} />): (<Navigate replace to={"/login"} />)
+            }/>
            
         
       </Routes>

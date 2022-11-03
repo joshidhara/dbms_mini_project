@@ -225,6 +225,30 @@ app.post('/orderquery',(request,response)=>{
 }
 }) 
 
+app.post('/checkthresh',async (request,response)=>{
+    response.header("Access-Control-Allow-Origin", "*");
+    const{ threshold,categ}=request.body
+    console.log(request.body)
+    
+    console.log(typeof(threshold))
+    const thresh=Number(threshold)
+    console.log(thresh)
+    console.log("In check route")
+    const component = await componenttemplateCopy.aggregate([{ $match: { $and: [ {quantity:{$lt:thresh}}, { category: categ } ] } } ])
+    if(component)
+    {
+        //console.log(response)
+        console.log(component)
+        response.setHeader('Content-Type', 'application/json');
+                response.end(JSON.stringify(component))
+    }
+    else
+    {
+        throw err;
+    }
+    
+    
+}) 
 app.listen(4000, () => console.log("server is up and running"))
 
 //arrangement of lines in thsi order is imp

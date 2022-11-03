@@ -19,7 +19,7 @@ const componenttemplate= new mongoose.Schema({
         
     },
     quantity:{
-        type:String,
+        type:Number,
         
     },
     power:{

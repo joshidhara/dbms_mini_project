@@ -1,6 +1,9 @@
 .login {
     width: 400px;
-    background: #fff;
+    background-image: url('https://thumbs.dreamstime.com/z/robotics-hand-touching-control-automation-robot-arms-machine-intelligent-factory-industrial-monitoring-system-software-124449298.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
     border: 1px solid #dddfe2;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 8px;
@@ -8,7 +11,12 @@
     align-items: center;
     text-align: center;
 }
-
+body {
+    background-image: url('./test.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgb(102, 203, 236);
+  }
 .login > input {
     border-radius: 8px;
     border: 2px solid #dddfe2;
